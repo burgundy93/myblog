@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8" />
+
+    <title>Ronald Langeveld</title>
+
+        <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css" />
+    <link rel="stylesheet" href="{{ theme_url }}/simple-grid.css" type="text/css" />
+    <link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css" />
+</head>
+<img class="profile-pic" src="{{ theme_url }}/static/profile.jpg">
+<body>
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div style="text-align: left;" class="col-6">
+
+<h1><a href="/">Hi, I'm Ronald. </a></h1>
+<p>I'm a 20 something year old <a href="https://goo.gl/maps/oT6kn5JfStB2" target="_blank">South African</a> who lived half a decade in <a href="https://goo.gl/maps/SLMNiXTqmJS2" target="_blank">Asia</a>.
+I recently rediscovered my passion for tech & development and am fully committed to ship web products and get better at what I love daily!</p>
+<p>I love quality coffee <i class="fa fa-coffee" aria-hidden="true"></i></p>
+<p>When I'm not shipping code, I'm probably getting <a href="https://www.instagram.com/p/BdLYGOglSYR/?taken-by=ronaldl93" target="_blank">barrelled</a> somewhere.</p>
+<p>I recently made <a href="">Downtime Bot</a>, <a href="">ThatVisa</a> and <a href="">Tech Work</a>.</p>
+</div>
+</div>
+</div>
+    </header>
+
+    <section id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                <h3 style="text-align: left;">Latest Posts</h3>
+            {% for page in pages|sort_by("time")|reverse %}
+    {% if page.id starts with "blog/" %}
+        <div class="post">
+            <li style="text-align: left;"><a href="{{ page.url }}">{{ page.title }}</a></li>
+        </div>
+    {% endif %}
+{% endfor %}
+</div>
+</div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="foot-links">
+    <p>find me on <i class="fa fa-github" aria-hidden="true"></i> <a href="https://github.com/burgundy93" target="_blank">github</a> and <i class="fa fa-twitter" aria-hidden="true"></i> <a href="https://twitter.com/ronaldl93_" target="_blank">twitter</a></p>
+</div>
+</div>
+</div>
+</div>
+    </footer>
+
+</body>
+</html>
