@@ -39,7 +39,7 @@ I recently rediscovered my passion for tech & development and am fully committed
             {% for page in pages|sort_by("time")|reverse %}
     {% if page.id starts with "blog/" %}
         <div class="post">
-            <li style="text-align: left;"><a href="{{ page.url }}">{{ page.title }}</a></li>
+            <li style="text-align: left;">{{ page.date }} | <a href="{{ page.url }}">{{ page.title }}</a></li>
         </div>
     {% endif %}
 {% endfor %}
