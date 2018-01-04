@@ -4,7 +4,6 @@ Author: Ronald
 Date: 2018/01/04
 Template: post
 ---
-
 Launching products is what I love doing..... well, creating products and seeing it come to life and then sharing it with the world.. It think it's the coding part that's addictive. Writing code and then to see my computer finally doing what I asked it to do is what makes my dopamine levels rocket. It's satisfying.
 
 I went to a small surfing town called Jeffreys Bay over the Christmas holidays. It was great! I got to surf some epic waves, saw family and even went sandboarding. It's an epic change of scene and routine from what I have going here. Good little breakaway. 

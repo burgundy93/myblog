@@ -43,7 +43,7 @@ I recently rediscovered my passion for tech & development and am fully committed
             {% for page in pages|sort_by("time")|reverse %}
     {% if page.id starts with "blog/" %}
         <div class="post">
-            <li style="text-align: left;">{{ page.date }} | <a href="{{ page.url }}">{{ page.title }}</a></li>
+            <li style="text-align: left;"><time class="timeago" datetime="{{ page.date }}">{{ page.date }}</time> | <a href="{{ page.url }}">{{ page.title }}</a></li>
         </div>
     {% endif %}
 {% endfor %}
@@ -74,5 +74,12 @@ I recently rediscovered my passion for tech & development and am fully committed
   gtag('js', new Date());
 
   gtag('config', 'UA-111873806-1');
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.1/jquery.timeago.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+  jQuery("time.timeago").timeago();
+});
 </script>
 </html>
