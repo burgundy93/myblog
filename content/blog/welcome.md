@@ -1,7 +1,6 @@
 ---
 Title: I started a new blog 
-Description: This description will go in the meta description tag
-Author: Joe Bloggs
+Author: Ronald
 Date: 2018/01/03
 Template: post
 ---
