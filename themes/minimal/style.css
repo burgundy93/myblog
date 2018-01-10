@@ -222,12 +222,12 @@ dd {
     right: 1rem;
     border-radius: 50%;
     position: fixed;
-    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 1);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    width: 11rem;
-    height: 10rem;
+    width: 12rem;
+    height: 12rem;
 }
 
         @media (max-width:1024px) {
