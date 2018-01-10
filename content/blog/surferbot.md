@@ -48,3 +48,7 @@ Also, the API is from MSW.  You can use my key to check it out, but I really rec
 Read their docs to make sure you don't get the report for the wrong location. It might confuse you.
 
 And one more important thing: Be discrete with your location and it's conditions - you don't want to anger your friends and local surfers when a bunch of non-locals discover your bot and crowds your home break.
+
+[Access the project on Github and feel free to fork it or contribute](https://github.com/burgundy93/localsurferbot)
+
+Cheers!
