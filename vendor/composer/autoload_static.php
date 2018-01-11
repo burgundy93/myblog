@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
+class ComposerStaticInitadd58ad707a8d50a70fc760f98e83701
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -14,6 +14,10 @@ class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
         'S' => 
         array (
             'Symfony\\Component\\Yaml\\' => 23,
+        ),
+        'P' => 
+        array (
+            'Pico\\Composer\\' => 14,
         ),
     );
 
@@ -25,6 +29,10 @@ class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Pico\\Composer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/picocms/composer-installer/src',
         ),
     );
 
@@ -40,11 +48,11 @@ class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
         array (
             'PicoPluginInterface' => 
             array (
-                0 => __DIR__ . '/../..' . '/lib',
+                0 => __DIR__ . '/..' . '/picocms/pico/lib',
             ),
             'Pico' => 
             array (
-                0 => __DIR__ . '/../..' . '/lib',
+                0 => __DIR__ . '/..' . '/picocms/pico/lib',
             ),
             'ParsedownExtra' => 
             array (
@@ -59,19 +67,21 @@ class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
         array (
             'AbstractPicoPlugin' => 
             array (
-                0 => __DIR__ . '/../..' . '/lib',
+                0 => __DIR__ . '/..' . '/picocms/pico/lib',
             ),
         ),
     );
 
     public static $classMap = array (
-        'AbstractPicoPlugin' => __DIR__ . '/../..' . '/lib/AbstractPicoPlugin.php',
+        'AbstractPicoPlugin' => __DIR__ . '/..' . '/picocms/pico/lib/AbstractPicoPlugin.php',
         'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
         'ParsedownExtra' => __DIR__ . '/..' . '/erusev/parsedown-extra/ParsedownExtra.php',
         'ParsedownExtraTest' => __DIR__ . '/..' . '/erusev/parsedown-extra/test/ParsedownExtraTest.php',
-        'Pico' => __DIR__ . '/../..' . '/lib/Pico.php',
-        'PicoPluginInterface' => __DIR__ . '/../..' . '/lib/PicoPluginInterface.php',
-        'PicoTwigExtension' => __DIR__ . '/../..' . '/lib/PicoTwigExtension.php',
+        'Pico' => __DIR__ . '/..' . '/picocms/pico/lib/Pico.php',
+        'PicoDeprecated' => __DIR__ . '/../..' . '/plugins/PicoDeprecated/PicoDeprecated.php',
+        'PicoPluginInterface' => __DIR__ . '/..' . '/picocms/pico/lib/PicoPluginInterface.php',
+        'PicoTwigExtension' => __DIR__ . '/..' . '/picocms/pico/lib/PicoTwigExtension.php',
+        'Pico\\Composer\\Installer\\PluginInstaller' => __DIR__ . '/..' . '/picocms/composer-installer/src/Installer/PluginInstaller.php',
         'Symfony\\Component\\Yaml\\Dumper' => __DIR__ . '/..' . '/symfony/yaml/Dumper.php',
         'Symfony\\Component\\Yaml\\Escaper' => __DIR__ . '/..' . '/symfony/yaml/Escaper.php',
         'Symfony\\Component\\Yaml\\Exception\\DumpException' => __DIR__ . '/..' . '/symfony/yaml/Exception/DumpException.php',
@@ -101,6 +111,7 @@ class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
         'Twig\\Extension\\InitRuntimeInterface' => __DIR__ . '/..' . '/twig/twig/src/Extension/InitRuntimeInterface.php',
         'Twig\\Extension\\OptimizerExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/OptimizerExtension.php',
         'Twig\\Extension\\ProfilerExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/ProfilerExtension.php',
+        'Twig\\Extension\\RuntimeExtensionInterface' => __DIR__ . '/..' . '/twig/twig/src/Extension/RuntimeExtensionInterface.php',
         'Twig\\Extension\\SandboxExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/SandboxExtension.php',
         'Twig\\Extension\\StagingExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StagingExtension.php',
         'Twig\\Extension\\StringLoaderExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StringLoaderExtension.php',
@@ -455,10 +466,10 @@ class ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit1c54f5e4e87e764e9eab76b8307c7ca8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitadd58ad707a8d50a70fc760f98e83701::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitadd58ad707a8d50a70fc760f98e83701::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitadd58ad707a8d50a70fc760f98e83701::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitadd58ad707a8d50a70fc760f98e83701::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -1,14 +1,27 @@
 <?php
+/**
+ * This file is part of Pico. It's copyrighted by the contributors recorded
+ * in the version control history of the file, available from the following
+ * original location:
+ *
+ * <https://github.com/picocms/Pico/blob/master/lib/AbstractPicoPlugin.php>
+ *
+ * SPDX-License-Identifier: MIT
+ * License-Filename: LICENSE
+ */
 
 /**
  * Abstract class to extend from when implementing a Pico plugin
+ *
+ * Please refer to {@see PicoPluginInterface} for more information about how
+ * to develop a plugin for Pico.
  *
  * @see PicoPluginInterface
  *
  * @author  Daniel Rudolf
  * @link    http://picocms.org
  * @license http://opensource.org/licenses/MIT The MIT License
- * @version 1.0
+ * @version 2.0
  */
 abstract class AbstractPicoPlugin implements PicoPluginInterface
 {
@@ -21,11 +34,11 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
     private $pico;
 
     /**
-     * Boolean indicating if this plugin is enabled (true) or disabled (false)
+     * Boolean indicating if this plugin is enabled (TRUE) or disabled (FALSE)
      *
      * @see PicoPluginInterface::isEnabled()
      * @see PicoPluginInterface::setEnabled()
-     * @var boolean
+     * @var bool
      */
     protected $enabled = true;
 
@@ -33,9 +46,17 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
      * Boolean indicating if this plugin was ever enabled/disabled manually
      *
      * @see PicoPluginInterface::isStatusChanged()
-     * @var boolean
+     * @var bool
      */
     protected $statusChanged = false;
+
+    /**
+     * Boolean indicating whether this plugin matches Pico's API version
+     *
+     * @see AbstractPicoPlugin::checkCompatibility()
+     * @var bool|null
+     */
+    protected $nativePlugin;
 
     /**
      * List of plugins which this plugin depends on
@@ -74,13 +95,14 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
             if ($pluginEnabled !== null) {
                 $this->setEnabled($pluginEnabled);
             } else {
-                $pluginConfig = $this->getConfig(get_called_class());
-                if (is_array($pluginConfig) && isset($pluginConfig['enabled'])) {
-                    $this->setEnabled($pluginConfig['enabled']);
+                $pluginEnabled = $this->getPluginConfig('enabled');
+                if ($pluginEnabled !== null) {
+                    $this->setEnabled($pluginEnabled);
                 } elseif ($this->enabled) {
                     // make sure dependencies are already fulfilled,
                     // otherwise the plugin needs to be enabled manually
                     try {
+                        $this->checkCompatibility();
                         $this->checkDependencies(false);
                     } catch (RuntimeException $e) {
                         $this->enabled = false;
@@ -105,6 +127,7 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
         $this->enabled = (bool) $enabled;
 
         if ($enabled) {
+            $this->checkCompatibility();
             $this->checkDependencies($recursive);
         } else {
             $this->checkDependants($recursive);
@@ -136,12 +159,38 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
     }
 
     /**
+     * Returns either the value of the specified plugin config variable or
+     * the config array
+     *
+     * @param string $configName optional name of a config variable
+     * @param mixed  $default    optional default value to return when the
+     *     named config variable doesn't exist
+     *
+     * @return mixed if no name of a config variable has been supplied, the
+     *     plugin's config array is returned; otherwise it returns either the
+     *     value of the named config variable, or, if the named config variable
+     *     doesn't exist, the provided default value or NULL
+     */
+    public function getPluginConfig($configName = null, $default = null)
+    {
+        $pluginConfig = $this->getConfig(get_called_class(), array());
+
+        if ($configName === null) {
+            return $pluginConfig;
+        }
+
+        return isset($pluginConfig[$configName]) ? $pluginConfig[$configName] : $default;
+    }
+
+    /**
      * Passes all not satisfiable method calls to Pico
      *
-     * @see    Pico
-     * @param  string $methodName name of the method to call
-     * @param  array  $params     parameters to pass
-     * @return mixed              return value of the called method
+     * @see Pico
+     *
+     * @param string $methodName name of the method to call
+     * @param array  $params     parameters to pass
+     *
+     * @return mixed return value of the called method
      */
     public function __call($methodName, array $params)
     {
@@ -158,10 +207,13 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
     /**
      * Enables all plugins which this plugin depends on
      *
-     * @see    PicoPluginInterface::getDependencies()
-     * @param  boolean $recursive enable required plugins automatically
+     * @see PicoPluginInterface::getDependencies()
+     *
+     * @param bool $recursive enable required plugins automatically
+     *
      * @return void
-     * @throws RuntimeException   thrown when a dependency fails
+     *
+     * @throws RuntimeException thrown when a dependency fails
      */
     protected function checkDependencies($recursive)
     {
@@ -176,7 +228,7 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
             }
 
             // plugins which don't implement PicoPluginInterface are always enabled
-            if (is_a($plugin, 'PicoPluginInterface') && !$plugin->isEnabled()) {
+            if (($plugin instanceof PicoPluginInterface) && !$plugin->isEnabled()) {
                 if ($recursive) {
                     if (!$plugin->isStatusChanged()) {
                         $plugin->setEnabled(true, true, true);
@@ -207,15 +259,18 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
     /**
      * Disables all plugins which depend on this plugin
      *
-     * @see    PicoPluginInterface::getDependants()
-     * @param  boolean $recursive disabled dependant plugins automatically
+     * @see PicoPluginInterface::getDependants()
+     *
+     * @param bool $recursive disabled dependant plugins automatically
+     *
      * @return void
-     * @throws RuntimeException   thrown when a dependency fails
+     *
+     * @throws RuntimeException thrown when a dependency fails
      */
     protected function checkDependants($recursive)
     {
         $dependants = $this->getDependants();
-        if (!empty($dependants)) {
+        if ($dependants) {
             if ($recursive) {
                 foreach ($this->getDependants() as $pluginName => $plugin) {
                     if ($plugin->isEnabled()) {
@@ -230,8 +285,8 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
                     }
                 }
             } else {
-                $dependantsList = 'plugin' . ((count($dependants) > 1) ? 's' : '') . ' ';
-                $dependantsList .= "'" . implode("', '", array_keys($dependants)) . "'";
+                $dependantsList = 'plugin' . ((count($dependants) > 1) ? 's' : '') . ' '
+                    . "'" . implode("', '", array_keys($dependants)) . "'";
                 throw new RuntimeException(
                     "Unable to disable plugin '" . get_called_class() . "': "
                     . "Required by " . $dependantsList
@@ -249,7 +304,7 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
             $this->dependants = array();
             foreach ($this->getPlugins() as $pluginName => $plugin) {
                 // only plugins which implement PicoPluginInterface support dependencies
-                if (is_a($plugin, 'PicoPluginInterface')) {
+                if ($plugin instanceof PicoPluginInterface) {
                     $dependencies = $plugin->getDependencies();
                     if (in_array(get_called_class(), $dependencies)) {
                         $this->dependants[$pluginName] = $plugin;
@@ -259,5 +314,37 @@ abstract class AbstractPicoPlugin implements PicoPluginInterface
         }
 
         return $this->dependants;
+    }
+
+    /**
+     * Checks compatibility with Pico's API version
+     *
+     * Pico automatically adds a dependency to {@see PicoDeprecated} when the
+     * plugin's API is older than Pico's API. {@see PicoDeprecated} furthermore
+     * throws a exception when it can't provide compatibility in such cases.
+     * However, we still have to decide whether this plugin is compatible to
+     * newer API versions, what defaults to "no" by default.
+     *
+     * @return void
+     *
+     * @throws RuntimeException thrown when the plugin's and Pico's API aren't
+     *     compatible
+     */
+    protected function checkCompatibility()
+    {
+        if ($this->nativePlugin === null) {
+            $picoClassName = get_class($this->pico);
+            $picoApiVersion = defined($picoClassName . '::API_VERSION') ? $picoClassName::API_VERSION : 1;
+            $pluginApiVersion = defined('static::API_VERSION') ? static::API_VERSION : 1;
+
+            $this->nativePlugin = ($pluginApiVersion === $picoApiVersion);
+
+            if (!$this->nativePlugin && ($pluginApiVersion > $picoApiVersion)) {
+                throw new RuntimeException(
+                    "Unable to enable plugin '" . get_called_class() . "': The plugin's API (version "
+                    . $pluginApiVersion . ") isn't compatible with Pico's API (version " . $picoApiVersion . ")"
+                );
+            }
+        }
     }
 }

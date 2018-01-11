@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Pico\\Composer\\' => array($vendorDir . '/picocms/composer-installer/src'),
 );

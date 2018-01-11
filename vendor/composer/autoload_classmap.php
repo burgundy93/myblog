@@ -6,13 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AbstractPicoPlugin' => $baseDir . '/lib/AbstractPicoPlugin.php',
+    'AbstractPicoPlugin' => $vendorDir . '/picocms/pico/lib/AbstractPicoPlugin.php',
     'Parsedown' => $vendorDir . '/erusev/parsedown/Parsedown.php',
     'ParsedownExtra' => $vendorDir . '/erusev/parsedown-extra/ParsedownExtra.php',
     'ParsedownExtraTest' => $vendorDir . '/erusev/parsedown-extra/test/ParsedownExtraTest.php',
-    'Pico' => $baseDir . '/lib/Pico.php',
-    'PicoPluginInterface' => $baseDir . '/lib/PicoPluginInterface.php',
-    'PicoTwigExtension' => $baseDir . '/lib/PicoTwigExtension.php',
+    'Pico' => $vendorDir . '/picocms/pico/lib/Pico.php',
+    'PicoDeprecated' => $baseDir . '/plugins/PicoDeprecated/PicoDeprecated.php',
+    'PicoPluginInterface' => $vendorDir . '/picocms/pico/lib/PicoPluginInterface.php',
+    'PicoTwigExtension' => $vendorDir . '/picocms/pico/lib/PicoTwigExtension.php',
+    'Pico\\Composer\\Installer\\PluginInstaller' => $vendorDir . '/picocms/composer-installer/src/Installer/PluginInstaller.php',
     'Symfony\\Component\\Yaml\\Dumper' => $vendorDir . '/symfony/yaml/Dumper.php',
     'Symfony\\Component\\Yaml\\Escaper' => $vendorDir . '/symfony/yaml/Escaper.php',
     'Symfony\\Component\\Yaml\\Exception\\DumpException' => $vendorDir . '/symfony/yaml/Exception/DumpException.php',
@@ -42,6 +44,7 @@ return array(
     'Twig\\Extension\\InitRuntimeInterface' => $vendorDir . '/twig/twig/src/Extension/InitRuntimeInterface.php',
     'Twig\\Extension\\OptimizerExtension' => $vendorDir . '/twig/twig/src/Extension/OptimizerExtension.php',
     'Twig\\Extension\\ProfilerExtension' => $vendorDir . '/twig/twig/src/Extension/ProfilerExtension.php',
+    'Twig\\Extension\\RuntimeExtensionInterface' => $vendorDir . '/twig/twig/src/Extension/RuntimeExtensionInterface.php',
     'Twig\\Extension\\SandboxExtension' => $vendorDir . '/twig/twig/src/Extension/SandboxExtension.php',
     'Twig\\Extension\\StagingExtension' => $vendorDir . '/twig/twig/src/Extension/StagingExtension.php',
     'Twig\\Extension\\StringLoaderExtension' => $vendorDir . '/twig/twig/src/Extension/StringLoaderExtension.php',
